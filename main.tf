@@ -1,15 +1,24 @@
-variable "region" {
-  description = "The AWS region to deploy resources"
-  default     = "us-east-1"
+provider "aws" {
+  region = var.region
 }
 
-variable "trusted_ips" {
-  description = "List of trusted IPs for SSH access"
-  type        = list(string)
-  default     = ["1.2.3.4/32"]  # Example trusted IP for SSH access
+module "guardduty" {
+  source = "./guardduty.tf"
 }
 
-variable "remediation_sg_id" {
-  description = "Security group ID to apply the remediations"
-  type        = string
+module "cloudwatch_events" {
+  source = "./cloudwatch_events.tf"
+}
+
+module "ssm_automation" {
+  source = "./ssm_automation.tf"
+}
+
+module "sns_notifications" {
+  source = "./sns_notifications.tf"
+}
+
+module "security_groups" {
+  source      = "./security_groups.tf"
+  trusted_ips = var.trusted_ips
 }
