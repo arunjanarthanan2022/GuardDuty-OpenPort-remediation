@@ -1,27 +1,15 @@
-# variables.tf
-
-variable "aws_region" {
-  description = "AWS region to deploy resources"
-  type        = string
+variable "region" {
+  description = "The AWS region to deploy resources"
   default     = "us-east-1"
 }
 
-variable "account_id" {
-  description = "AWS account ID for Firewall Manager"
-  type        = string
+variable "trusted_ips" {
+  description = "List of trusted IPs for SSH access"
+  type        = list(string)
+  default     = ["1.2.3.4/32"]  # Example trusted IP for SSH access
 }
 
-variable "admin_account_id" {
-  description = "AWS account ID for GuardDuty organization admin"
-  type        = string
-}
-
-variable "ssh_rule_group_arn" {
-  description = "ARN of the WAF rule group for SSH access"
-  type        = string
-}
-
-variable "mysql_rule_group_arn" {
-  description = "ARN of the WAF rule group for MySQL access"
+variable "remediation_sg_id" {
+  description = "Security group ID to apply the remediations"
   type        = string
 }
