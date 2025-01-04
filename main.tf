@@ -1,18 +1,15 @@
-# main.tf
-
-provider "aws" {
-  region = var.aws_region
+variable "region" {
+  description = "The AWS region to deploy resources"
+  default     = "us-east-1"
 }
 
-# Include other Terraform configuration files
-module "guardduty" {
-  source = "./guardduty.tf"
+variable "trusted_ips" {
+  description = "List of trusted IPs for SSH access"
+  type        = list(string)
+  default     = ["1.2.3.4/32"]  # Example trusted IP for SSH access
 }
 
-module "firewall_manager" {
-  source = "./firewall_manager.tf"
-}
-
-module "integration" {
-  source = "./integration.tf"
+variable "remediation_sg_id" {
+  description = "Security group ID to apply the remediations"
+  type        = string
 }
